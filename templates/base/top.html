@@ -1,122 +1,67 @@
-{% load static %}
-<!DOCTYPE html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="content-language" content="ja">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-  <link href="{% static 'css/semantic.css' %}" rel="stylesheet">
-  <title>{{title}}</title>
-</head>
-<body>
-  <div class="ui stackable inverted menu">
-    <div class="header item">
-      {{title}}
+{% extends 'base/base.html' %}
+{% block title %}ITについて切磋琢磨する掲示板 - {{ block.super }}{% endblock %}
+{% block content %}
+<div class="ui grid stackable">
+  <div class="eleven wide column">
+    <div class="ui breadcrumb">
+      <a class="section">TOP</a>
+      <i class="right angle icon divider"></i>
+      <a class="section">category</a>
+      <i class="right angle icon divider"></i>
+      <div class="active section">thread</div>
     </div>
-    <a class="item">
-      このサイトはなに？
-    </a>
-    <div class="right menu">
-      <a class="item">
-        Log in
-      </a>
-      <a class="item">
-        Sign up
-      </a>
-    </div>
-  </div>
-  
-  <div class="ui container" style="min-height:100vh;">
-    <div class="ui grid stackable">
-      <div class="eleven wide column">
-        <div class="ui breadcrumb">
-          <a class="section">TOP</a>
-          <i class="right angle icon divider"></i>
-          <a class="section">category</a>
-          <i class="right angle icon divider"></i>
-          <div class="active section">thread</div>
-        </div>
-        <div class="ui segment">
-          <div class="content">
-            <div class="header"><h3>新着スレッド</h3></div>
-            <div class="ui divided items">
-              <div class="item">
-                <div class="content">
-                  <div class="header">
-                    <a><h4>dummy thread</h4></a>
-                  </div>
-                  <div class="meta">
-                    <span class="name">投稿者名</span>
-                    <span class="date">2019-2-1 00:00</span>
-                  </div>
-                </div>
+    <div class="ui segment">
+      <div class="content">
+        <div class="header"><h3>新着スレッド</h3></div>
+        <div class="ui divided items">
+          <div class="item">
+            <div class="content">
+              <div class="header">
+                <a><h4>dummy thread</h4></a>
               </div>
-              <div class="item">
-                <div class="content">
-                  <div class="header">
-                    <a><h4>dummy thread</h4></a>
-                  </div>
-                  <div class="meta">
-                    <span class="name">投稿者名</span>
-                    <span class="date">2019-2-1 00:00</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="content">
-                  <div class="header">
-                    <a><h4>dummy thread</h4></a>
-                  </div>
-                  <div class="meta">
-                    <span class="name">投稿者名</span>
-                    <span class="date">2019-2-1 00:00</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="content">
-                  <div class="header">
-                    <a><h4>dummy thread</h4></a>
-                  </div>
-                  <div class="meta">
-                    <span class="name">投稿者名</span>
-                    <span class="date">2019-2-1 00:00</span>
-                  </div>
-                </div>
+              <div class="meta">
+                <span class="name">投稿者名</span>
+                <span class="date">2019-2-1 00:00</span>
               </div>
             </div>
           </div>
-        </div>
-       </div>
-      <div class="five wide column">
-        <div class="ui action input" style="width: 100%;">
-          <input type="text" placeholder="検索">
-          <button class="ui button"><i class="search icon"></i></button>
-        </div>
-        <div class="ui segment">
-          <div class="content">
-            <div class="header"><h4>カテゴリー</h4></div>
-            <div class="ui relaxed list small divided link">
-              <a class="item">dummy</a>
-              <a class="item">dummy</a>
-              <a class="item">dummy</a>
-              <a class="item">dummy</a>
-              <a class="item">dummy</a>
+          <div class="item">
+            <div class="content">
+              <div class="header">
+                <a><h4>dummy thread</h4></a>
+              </div>
+              <div class="meta">
+                <span class="name">投稿者名</span>
+                <span class="date">2019-2-1 00:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="content">
+              <div class="header">
+                <a><h4>dummy thread</h4></a>
+              </div>
+              <div class="meta">
+                <span class="name">投稿者名</span>
+                <span class="date">2019-2-1 00:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="content">
+              <div class="header">
+                <a><h4>dummy thread</h4></a>
+              </div>
+              <div class="meta">
+                <span class="name">投稿者名</span>
+                <span class="date">2019-2-1 00:00</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="ui inverted stackable footer segment">
-    <div class="ui container center aligned">
-      <div class="ui horizontal inverted small divided link list">
-        <a class="item">© 2019 IT学習ちゃんねる(仮)</a>
-        <a class="item">利用規約</a>
-        <a class="item">プライバシーポリシー</a>
-      </div>
-    </div>
-  </div>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="{% static 'js/semantic.js' %}"></script>
-</body>
+  {% include 'base/sidebar.html' %}
+</div>
+{% endblock %}
