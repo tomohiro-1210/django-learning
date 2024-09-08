@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, TemplateView, FormView, CreateView, ListView
 from django.urls import reverse_lazy
-from django import forms
 
-from . models import Topic, Category, Comment
-from . forms import TopicCreateForm ,TopicForm, CommentModelForm
+from . models import Topic, Category
+from . forms import TopicCreateForm ,TopicForm
 
 class TopicDetailView(DetailView):
     """トピック表示用クラス
@@ -15,7 +14,29 @@ class TopicDetailView(DetailView):
     template_name = 'thread/detail_topic.html'
     model = Topic
     context_object_name = 'topic'
+       
         
+def simple_topic_create(request):
+    """シンプルなトピック投稿用関数
+
+    関数ベースの投稿機能作成例として実装
+
+    """
+    template_name = 'thread/create_topic.html'
+    ctx = {}
+    if request.method == 'GET':
+        ctx['form'] = TopicCreateForm()
+        return render(request, template_name, ctx)
+    
+    if request.method == 'POST':
+        topic_form = TopicCreateForm(request.POST)
+        if topic_form.is_valid():
+            topic_form.save()
+            return redirect(reverse_lazy('top'))
+        else:
+            ctx['form'] = topic_form
+            return render(request, template_name, ctx)
+
 
 class TopicCreateView(CreateView):
     """トピック投稿用関数
@@ -50,27 +71,4 @@ class CategoryView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['category'] = get_object_or_404(Category, url_code=self.kwargs['url_code'])
-        return ctx
-    
-# コメント
-class TopAndCommentView(FormView):
-    template_name = 'thread/detail_topic.html'
-    form_class = CommentModelForm
-    
-    def form_valid(self, form):
-        # comment = form.save(commit=False)
-        # comment.topic = Topic.ojbects.get(id=self.kwargs['pk'])
-        # comment.no = Comment.objects.filter(topic=self.kwargs['pk']).count() + 1
-        # comment.save()
-        
-        CommentModelForm.save_with_topic(self.kwargs.get('pk'))
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse_lazy('thread:topic', kwargs={'pk': self.kwargs['pk']})
-    
-    def get_context_data(self):
-        ctx = super().get_context_data()
-        ctx['topic'] = Topic.objects.get(id=self.kwargs['pk'])
-        ctx['comment_list'] = Comment.objects.filter(topic_id=self.kwargs['pk'].order_by('no'))
         return ctx
