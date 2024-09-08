@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, FormView, CreateView
 from django.urls import reverse_lazy
 
 from . models import Topic
@@ -31,7 +31,7 @@ def simple_topic_create(request):
         topic_form = TopicCreateForm(request.POST)
         if topic_form.is_valid():
             topic_form.save()
-            return redirect(reverse_lazy('base:top'))
+            return redirect(reverse_lazy('top'))
         else:
             ctx['form'] = topic_form
             return render(request, template_name, ctx)
@@ -60,7 +60,33 @@ def topic_create(request):
             topic.user_name = cleaned_data['user_name']
             topic.category = cleaned_data['category']
             topic.save()            
-            return redirect(reverse_lazy('base:top'))
+            return redirect(reverse_lazy('top'))
         else:
             ctx['form'] = topic_form
             return render(request, template_name, ctx)
+        
+class TopicFormView(FormView):
+    """トピック投稿用関数
+
+    FormViewの練習用クラスとして作成
+
+    """
+    template_name = 'thread/create_topic.html'
+    form_class = TopicCreateForm
+    success_url = reverse_lazy('top')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
+
+class TopicCreateView(CreateView):
+    """トピック投稿用関数
+
+    CreateViewの練習用クラスとして作成
+
+    """
+    template_name = 'thread/create_topic.html'
+    form_class = TopicCreateForm
+    model = Topic
+    success_url = reverse_lazy('top')
